@@ -3,7 +3,7 @@ from flask import Flask, request, send_file
 import os
 import io
 from docx import Document
-import fitz  # PyMuPDF
+import fitz # PyMuPDF
 
 app = Flask(__name__)
 
