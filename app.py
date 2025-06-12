@@ -37,4 +37,5 @@ def evaluate():
     return send_file(report, as_attachment=True, download_name="評估回饋報告.docx")
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 10000)))
+    port = int(os.environ.get("PORT", 10000))
+    app.run(host="0.0.0.0", port=port)
