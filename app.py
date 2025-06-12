@@ -25,6 +25,9 @@ def generate_report(pdf_text, logic_text):
     stream.seek(0)
     return stream
 @app.route("/evaluate", methods=["POST"])
+@app.route("/")
+def home():
+    return "👋 Flask 服務已上線，請使用 POST /evaluate 上傳 PDF"
 def evaluate():
     if "file" not in request.files:
         return "請提供 PDF 檔案", 400
