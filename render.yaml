@@ -1,8 +1,7 @@
-
 services:
-  - type: web
-    name: pvevaluate
-    env: python
-    buildCommand: "pip install -r requirements.txt"
-    startCommand: "python app.py"
-    plan: free
+  - type: web
+    name: pvevaluate
+    env: python
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "python app.py"
+    plan: free
