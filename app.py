@@ -5,8 +5,13 @@ from docx import Document
 
 app = Flask(__name__)
 
+# 嵌入式範本檔案名稱
+TEMPLATE_PATH = "CC2025016_MA評估回饋20250417 2.docx"
+
 def load_evaluation_logic():
-    logic_doc = Document("CC2025016_MA評估回饋20250417 1.docx")
+    if not os.path.exists(TEMPLATE_PATH):
+        return "⚠️ 找不到範本檔案"
+    logic_doc = Document(TEMPLATE_PATH)
     return "\n".join([p.text for p in logic_doc.paragraphs if p.text.strip()])
 
 def extract_text_file(txt_path):
