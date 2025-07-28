@@ -6,7 +6,7 @@ from docx import Document
 app = Flask(__name__)
 
 # 嵌入式範本檔案名稱
-TEMPLATE_PATH = "CC2025016_MA評估回饋20250417 2.docx"
+TEMPLATE_PATH = "CC2025016_MA評估回饋20250417.docx"
 
 def load_evaluation_logic():
     if not os.path.exists(TEMPLATE_PATH):
