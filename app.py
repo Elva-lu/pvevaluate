@@ -5,16 +5,16 @@ from docx import Document
 
 app = Flask(__name__)
 
-# 嵌入式範本檔案名稱
 TEMPLATE_PATH = "CC2025016_MA評估回饋20250417.docx"
 
-def load_evaluation_logic():
-    if not os.path.exists(TEMPLATE_PATH):
-        return None, "⚠️ 找不到範本檔案"
+# 預先載入邏輯
+if not os.path.exists(TEMPLATE_PATH):
+    LOGIC_TEXT = None
+    STATUS_MESSAGE = "⚠️ 找不到範本檔案"
+else:
     logic_doc = Document(TEMPLATE_PATH)
-    logic_text = "\n".join([p.text for p in logic_doc.paragraphs if p.text.strip()])
-    status_message = f"依 {os.path.basename(TEMPLATE_PATH)} 邏輯"
-    return logic_text, status_message
+    LOGIC_TEXT = "\n".join([p.text for p in logic_doc.paragraphs if p.text.strip()])
+    STATUS_MESSAGE = f"依 {os.path.basename(TEMPLATE_PATH)} 邏輯"
 
 def generate_report(text_content, logic_text, status_message):
     doc = Document()
@@ -39,13 +39,12 @@ def evaluate():
     if not text_content:
         return "❌ 請提供文字內容（欄位名稱為 text）", 400
 
-    logic_text, status_message = load_evaluation_logic()
-    if not logic_text:
-        return status_message, 500
+    if not LOGIC_TEXT:
+        return STATUS_MESSAGE, 500
 
-    report = generate_report(text_content, logic_text, status_message)
+    report = generate_report(text_content, LOGIC_TEXT, STATUS_MESSAGE)
     response = send_file(report, as_attachment=True, download_name="評估回饋報告.docx")
-    response.headers["X-Status-Message"] = status_message  # 可選：加在 header 裡
+    response.headers["X-Status-Message"] = STATUS_MESSAGE
     return response
 
 if __name__ == "__main__":
